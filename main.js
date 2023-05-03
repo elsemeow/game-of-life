@@ -71,7 +71,7 @@ import GameLoop from "./modules/GameLoop.js";
       palette.dot,
       2
     );
-    gameLoop = new GameLoop(10);
+    gameLoop = new GameLoop(10 - Math.ceil(grid.cols * grid.rows * 0.000008));
 
     gameLoop.init(
       () => {
@@ -177,9 +177,6 @@ import GameLoop from "./modules/GameLoop.js";
             palette.dot,
             2 * surface.scale
           );
-          surface.scaleDelta.x /= surface.scale;
-          surface.scaleDelta.y /= surface.scale;
-
           updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
@@ -197,9 +194,6 @@ import GameLoop from "./modules/GameLoop.js";
             palette.dot,
             2 * surface.scale
           );
-          surface.scaleDelta.x /= surface.scale;
-          surface.scaleDelta.y /= surface.scale;
-
           updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
@@ -285,16 +279,18 @@ import GameLoop from "./modules/GameLoop.js";
   };
 
   function panMouseMoveHandler(event) {
-    surface.panDelta.x += Math.floor((surface.pan0.x - event.clientX) / 50);
-    surface.panDelta.y += Math.floor((surface.pan0.y - event.clientY) / 50);
+    surface.panDelta.x += Math.floor(
+      (surface.pan0.x - event.clientX) / 50 / surface.scale
+    );
+    surface.panDelta.y += Math.floor(
+      (surface.pan0.y - event.clientY) / 50 / surface.scale
+    );
     updatePositionDisplay();
   }
 
   const panMouseUpHandler = () => {
     surface.el.removeEventListener("mousemove", panMouseMoveHandler);
     surface.el.removeEventListener("mouseup", panMouseUpHandler);
-    surface.panDelta.x = Utils.clamp(surface.panDelta.x, -grid.midX, grid.midX);
-    surface.panDelta.y = Utils.clamp(surface.panDelta.y, -grid.midY, grid.midY);
     updatePositionDisplay();
   };
 
@@ -352,13 +348,15 @@ import GameLoop from "./modules/GameLoop.js";
 
   function updatePositionDisplay() {
     positionDisplay.textContent = `${Math.round(
-      (surface.panDelta.x - grid.midX) / surface.scale
-    )}, ${Math.round((surface.panDelta.y - grid.midY) / surface.scale)}`;
+      surface.panDelta.x
+    )}, ${Math.round(surface.panDelta.x)}`;
   }
 
   function freeDrawing(val, cX, cY) {
-    const x = cX - surface.midX + grid.midX - surface.panDelta.x;
-    const y = cY - surface.midY + grid.midY - surface.panDelta.y;
+    const x =
+      cX - surface.midX + grid.midX - surface.panDelta.x * surface.scale;
+    const y =
+      cY - surface.midY + grid.midY - surface.panDelta.y * surface.scale;
 
     if (x < grid.w && y < grid.h && x > 0 && y > 0) {
       const cell = surface.cell(cX, cY, grid.unit, grid.midX, grid.midY);

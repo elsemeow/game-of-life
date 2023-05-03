@@ -141,7 +141,6 @@ class Surface {
     this.panDelta = { x: 0, y: 0 };
     this.scale = 1;
     this.scaleF = 0.25;
-    this.scaleDelta = { x: 0, y: 0 };
     this.fitToWindow();
   }
 
@@ -224,15 +223,19 @@ class Surface {
    */
   applyPan(midX, midY) {
     this.ctx.translate(
-      this.midX - midX + this.panDelta.x + this.scaleDelta.x,
-      this.midY - midY + this.panDelta.y + this.scaleDelta.y
+      this.midX - midX + this.panDelta.x * this.scale,
+      this.midY - midY + this.panDelta.y * this.scale
     );
   }
 
   cell(cX, cY, unit, midX, midY) {
     return {
-      x: Math.floor((cX - this.midX + midX - this.panDelta.x) / unit),
-      y: Math.floor((cY - this.midY + midY - this.panDelta.y) / unit)
+      x: Math.floor(
+        (cX - this.midX + midX - this.panDelta.x * this.scale) / unit
+      ),
+      y: Math.floor(
+        (cY - this.midY + midY - this.panDelta.y * this.scale) / unit
+      )
     };
   }
 }
@@ -352,7 +355,7 @@ class GameLoop {
       palette.dot,
       2
     );
-    gameLoop = new GameLoop(10);
+    gameLoop = new GameLoop(10 - Math.ceil(grid.cols * grid.rows * 0.000008));
 
     gameLoop.init(
       () => {
@@ -458,9 +461,6 @@ class GameLoop {
             palette.dot,
             2 * surface.scale
           );
-          surface.scaleDelta.x /= surface.scale;
-          surface.scaleDelta.y /= surface.scale;
-
           updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
@@ -478,9 +478,6 @@ class GameLoop {
             palette.dot,
             2 * surface.scale
           );
-          surface.scaleDelta.x /= surface.scale;
-          surface.scaleDelta.y /= surface.scale;
-
           updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
@@ -566,16 +563,18 @@ class GameLoop {
   };
 
   function panMouseMoveHandler(event) {
-    surface.panDelta.x += Math.floor((surface.pan0.x - event.clientX) / 50);
-    surface.panDelta.y += Math.floor((surface.pan0.y - event.clientY) / 50);
+    surface.panDelta.x += Math.floor(
+      (surface.pan0.x - event.clientX) / 50 / surface.scale
+    );
+    surface.panDelta.y += Math.floor(
+      (surface.pan0.y - event.clientY) / 50 / surface.scale
+    );
     updatePositionDisplay();
   }
 
   const panMouseUpHandler = () => {
     surface.el.removeEventListener("mousemove", panMouseMoveHandler);
     surface.el.removeEventListener("mouseup", panMouseUpHandler);
-    surface.panDelta.x = Utils.clamp(surface.panDelta.x, -grid.midX, grid.midX);
-    surface.panDelta.y = Utils.clamp(surface.panDelta.y, -grid.midY, grid.midY);
     updatePositionDisplay();
   };
 
@@ -633,13 +632,15 @@ class GameLoop {
 
   function updatePositionDisplay() {
     positionDisplay.textContent = `${Math.round(
-      (surface.panDelta.x - grid.midX) / surface.scale
-    )}, ${Math.round((surface.panDelta.y - grid.midY) / surface.scale)}`;
+      surface.panDelta.x
+    )}, ${Math.round(surface.panDelta.x)}`;
   }
 
   function freeDrawing(val, cX, cY) {
-    const x = cX - surface.midX + grid.midX - surface.panDelta.x;
-    const y = cY - surface.midY + grid.midY - surface.panDelta.y;
+    const x =
+      cX - surface.midX + grid.midX - surface.panDelta.x * surface.scale;
+    const y =
+      cY - surface.midY + grid.midY - surface.panDelta.y * surface.scale;
 
     if (x < grid.w && y < grid.h && x > 0 && y > 0) {
       const cell = surface.cell(cX, cY, grid.unit, grid.midX, grid.midY);

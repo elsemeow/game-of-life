@@ -10,7 +10,6 @@ export default class Surface {
     this.panDelta = { x: 0, y: 0 };
     this.scale = 1;
     this.scaleF = 0.25;
-    this.scaleDelta = { x: 0, y: 0 };
     this.fitToWindow();
   }
 
@@ -93,15 +92,19 @@ export default class Surface {
    */
   applyPan(midX, midY) {
     this.ctx.translate(
-      this.midX - midX + this.panDelta.x + this.scaleDelta.x,
-      this.midY - midY + this.panDelta.y + this.scaleDelta.y
+      this.midX - midX + this.panDelta.x * this.scale,
+      this.midY - midY + this.panDelta.y * this.scale
     );
   }
 
   cell(cX, cY, unit, midX, midY) {
     return {
-      x: Math.floor((cX - this.midX + midX - this.panDelta.x) / unit),
-      y: Math.floor((cY - this.midY + midY - this.panDelta.y) / unit)
+      x: Math.floor(
+        (cX - this.midX + midX - this.panDelta.x * this.scale) / unit
+      ),
+      y: Math.floor(
+        (cY - this.midY + midY - this.panDelta.y * this.scale) / unit
+      )
     };
   }
 }
