@@ -575,7 +575,6 @@ class GameLoop {
   const panMouseUpHandler = () => {
     surface.el.removeEventListener("mousemove", panMouseMoveHandler);
     surface.el.removeEventListener("mouseup", panMouseUpHandler);
-    updatePositionDisplay();
   };
 
   // ## Clear
@@ -631,9 +630,8 @@ class GameLoop {
   //----------------------------------------------------------------------------
 
   function updatePositionDisplay() {
-    positionDisplay.textContent = `${Math.round(
-      surface.panDelta.x
-    )}, ${Math.round(surface.panDelta.x)}`;
+    positionDisplay.textContent =
+      Math.round(-surface.panDelta.x) + ", " + Math.round(-surface.panDelta.y);
   }
 
   function freeDrawing(val, cX, cY) {
