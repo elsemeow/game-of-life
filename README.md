@@ -44,7 +44,7 @@ In this state, 4 types of tools are available to you:
 
 - "Pencil" - draws cells on the grid with the mouse;
 - "Eraser" - erases the cells on the grid with the mouse;
-- "Panorama" - control the camera, to do this, hold down the left mouse button and move the mouse in any direction;
+- "Pan" - control the camera, to do this, hold down the left mouse button and move the mouse in any direction;
 - "Clear" - completely clears the grid.
 
 In the lower right corner is information about the current state of the game.
