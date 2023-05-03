@@ -1,5 +1,37 @@
 # Game of Life
 
+## How to start
+
+### Serverless
+
+In the `/serverless` directory there is a version to run without a server, just run `index.html` file from there.
+
+### Via Vite
+
+Installing dependencies
+
+```
+npm install
+```
+
+Start dev server, aliases: vite dev, vite serve
+
+```
+npm run dev
+```
+
+or build for production (creates /dist)
+
+```
+npm run build
+```
+
+and run locally preview production build
+
+```
+npm run preview
+```
+
 ## Game states
 
 ### 1. Grid setup
