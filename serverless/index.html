@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="../public/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game of Life</title>
+    <link rel="stylesheet" href="../styles/main.css">
+  </head>
+  <body>
+    <canvas id="surface"></canvas>
+
+    <div id="tools" class="tools">
+      <button type="button" id="pencil" class="btn btn_sm">Pencil</button>
+      <button type="button" id="eraser" class="btn btn_sm">Eraser</button>
+      <button type="button" id="pan" class="btn btn_sm">Pan</button>
+      <button type="button" id="clear" class="btn btn_sm ml-1">Clear</button>
+    </div>
+
+    <div class="controls">
+      <button type="button" id="reset" class="btn">Reset</button>
+      <button type="button" id="run" class="btn">Run</button>
+    </div>
+
+    <div class="status">
+      <div>Pos: <span id="position" class="highlight"></span></div>
+      <div>Scale: <span id="scale" class="highlight"></span>%</div>
+      <div>Speed: <span id="speed" class="highlight"></span> FPS</div>
+    </div>
+
+    <div class="help">
+      <div>
+        <span class="highlight">Camera</span> control: select
+        <span class="highlight">[pan]</span>, hold down the mouse button and
+        move the cursor
+      </div>
+      <div>
+        <span class="highlight">Scale</span> control:
+        <span class="highlight">[_] or [-]</span> - scale down,
+        <span class="highlight">[=] or [+]</span> - scale up
+      </div>
+      <div>
+        <span class="highlight">Speed</span> control:
+        <span class="highlight">[&larr;]</span> - slow down,
+        <span class="highlight">[&rarr;]</span> - speed up
+      </div>
+    </div>
+
+    <div id="setup" class="setup">
+      <h1 class="game-title">Game of <span class="highlight">Life</span></h1>
+      <div class="setup__item">
+        <label for="cols-range" class="label">
+          Columns: <span id="cols-display" class="highlight"></span>
+        </label>
+        <input
+          type="range"
+          min="1"
+          max="1000"
+          value="10"
+          id="cols-range"
+          class="range"
+        />
+      </div>
+      <div class="setup__item mb-1-75">
+        <label for="rows-range" class="label">
+          Rows: <span id="rows-display" class="highlight"></span>
+        </label>
+        <input
+          type="range"
+          min="1"
+          max="1000"
+          value="10"
+          id="rows-range"
+          class="range"
+        />
+      </div>
+      <button type="button" id="create-grid" class="setup__item btn">
+        Create Grid
+      </button>
+      <div class="setup__author">2023 (cc) Maxim Belov</div>
+    </div>
+
+    <script src="./main.js"></script>
+  </body>
+</html>

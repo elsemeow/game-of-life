@@ -1,0 +1,16 @@
+{
+  "name": "game-of-life",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "author": "Maxim Belov",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.3.2"
+  }
+}
