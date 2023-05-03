@@ -351,8 +351,9 @@ import GameLoop from "./modules/GameLoop.js";
   //----------------------------------------------------------------------------
 
   function updatePositionDisplay() {
-    positionDisplay.textContent =
-      surface.panDelta.x - grid.midX + ", " + (surface.panDelta.y - grid.midY);
+    positionDisplay.textContent = `${Math.round(
+      (surface.panDelta.x - grid.midX) / surface.scale
+    )}, ${Math.round((surface.panDelta.y - grid.midY) / surface.scale)}`;
   }
 
   function freeDrawing(val, cX, cY) {
