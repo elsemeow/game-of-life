@@ -51,7 +51,7 @@ In the lower right corner is information about the current state of the game.
 
 - "Pos" - current screen center position;
 - "Scale" - current screen zoom (`100%` by default);
-- "Speed" - current game speed (`10` by default).
+- "Speed" - current game speed (depends on grid size by default).
 
 To control the game speed (from `0 FPS` to `60 FPS` by default), use the keyboard. Press `[Right Arrow]` to increase speed, press `[Left Arrow]` to decrease speed.
 
