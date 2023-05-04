@@ -34,10 +34,6 @@ export default class Grid {
     return this.#unscaled;
   }
 
-  indexByPos(x, y) {
-    return y * this.cols + x;
-  }
-
   xByIndex(index) {
     return index % this.cols;
   }
