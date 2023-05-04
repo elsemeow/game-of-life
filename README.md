@@ -36,15 +36,15 @@ npm run preview
 
 ### 1. Grid setup
 
-Use the sliders to set the width and height of the playing field. The default grid sizes are from `1x1` to `1000x1000` elements. Once the desired values are selected, click "Create Grid".
+Use the sliders to set the width and height of the playing field. The default grid sizes are from `1x1` to `1000x1000` elements. Once the desired values are selected click "Create Grid".
 
 ### 2. Drawing
 
-In this state, 4 types of tools are available to you:
+In this state 4 types of tools are available to you:
 
 - "Pencil" - draws cells on the grid with the mouse;
 - "Eraser" - erases the cells on the grid with the mouse;
-- "Pan" - control the camera, to do this, hold down the left mouse button and move the mouse in any direction;
+- "Pan" - control the camera, to do this hold down the left mouse button and move the mouse in any direction;
 - "Clear" - completely clears the grid.
 
 In the lower right corner is information about the current state of the game.
@@ -53,16 +53,16 @@ In the lower right corner is information about the current state of the game.
 - "Scale" - current screen zoom (`100%` by default);
 - "Speed" - current game speed (depends on grid size by default).
 
-To control the game speed (from `0 FPS` to `60 FPS` by default), use the keyboard. Press `[Right Arrow]` to increase speed, press `[Left Arrow]` to decrease speed.
+To control the game speed (from `0 FPS` to `60 FPS` by default) use the keyboard. Press `[Right Arrow]` to increase speed, press `[Left Arrow]` to decrease speed.
 
 Use the keyboard to control zoom (from `25%` to `150%` by default). `[=]` or `[+]` to zoom in. `[-]` or `[_]` to zoom out.
 
-After the desired figures are drawn on the field, click "Run".
+After the desired figures are drawn on the field click "Run".
 
 ### 3. Run
 
-While the game is running, you can control the camera, zoom and game speed.
+While the game is running you can control the camera, zoom and game speed.
 
 When you click on "Reset" the state of the game returns to the first generation.
 
-To return to the "Grid setup" state, reload the page.
+To return to the "Grid setup" state reload the page.
