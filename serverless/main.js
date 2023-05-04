@@ -37,7 +37,6 @@ class Grid {
     this.#unscaled = this.unit;
     this.root = new Uint8Array(this.cols * this.rows);
     this.next = new Uint8Array(this.cols * this.rows);
-    this.state = 0;
   }
 
   get w() {
@@ -109,9 +108,7 @@ class Grid {
     if (y === this.rows - 1) dy[4] = dy[5] = dy[6] = 0;
 
     let l = dx.length;
-    while (l--) {
-      result += this.elByPos(arr, dx[l], dy[l]);
-    }
+    while (l--) result += this.elByPos(arr, dx[l], dy[l]);
 
     return result;
   }
@@ -204,7 +201,6 @@ class Surface {
 
     patternCtx.fillStyle = bgColor;
     patternCtx.fillRect(0, 0, unit, unit);
-
     patternCtx.fillStyle = dotColor;
     patternCtx.arc(unitMid, unitMid, r, 0, 2 * Math.PI);
     patternCtx.fill();
@@ -245,7 +241,6 @@ class GameLoop {
   #interval;
   #then;
   #delta;
-  #requestId;
   #loopRunner;
 
   /** @param {number} fps - Frames per second. */
@@ -276,18 +271,12 @@ class GameLoop {
         throttledRender();
       }
 
-      this.#requestId = window.requestAnimationFrame(this.#loopRunner);
+      window.requestAnimationFrame(this.#loopRunner);
     };
   }
 
   run() {
     this.#loopRunner();
-  }
-
-  cancel() {
-    window.cancelAnimationFrame(this.#requestId);
-    this.#then = window.performance.now();
-    this.#delta = 0;
   }
 }
 
@@ -318,6 +307,7 @@ class GameLoop {
   const rowsRange = document.getElementById("rows-range");
   const colsDisplay = document.getElementById("cols-display");
   const rowsDisplay = document.getElementById("rows-display");
+  const setup = document.getElementById("setup");
   const createGrid = document.getElementById("create-grid");
 
   const positionDisplay = document.getElementById("position");
@@ -328,6 +318,7 @@ class GameLoop {
   const eraserBtn = document.getElementById("eraser");
   const panBtn = document.getElementById("pan");
   const clearBtn = document.getElementById("clear");
+  const tools = document.querySelectorAll("#tools > .btn");
 
   const resetBtn = document.getElementById("reset");
   const runBtn = document.getElementById("run");
@@ -371,14 +362,13 @@ class GameLoop {
         let i = grid.root.length;
         const unit = grid.unit;
         while (i--) {
-          if (grid.next[i]) {
+          if (grid.next[i])
             surface.ctx.fillRect(
               grid.xByIndex(i) * unit,
               grid.yByIndex(i) * unit,
               unit,
               unit
             );
-          }
         }
 
         surface.resetTransform();
@@ -414,7 +404,6 @@ class GameLoop {
 
     initGame();
     uiSetupState();
-
     gameLoop.run();
 
     updatePositionDisplay();
@@ -424,17 +413,15 @@ class GameLoop {
     window.addEventListener("resize", updateOnResize);
     document.addEventListener("keyup", keyUpHandler, false);
 
-    clearBtn.addEventListener("click", clearClickHandler);
     surface.el.addEventListener("mousedown", pencilMouseDownHandler);
 
     pencilBtn.addEventListener("click", selectPencil);
     eraserBtn.addEventListener("click", selectEraser);
     panBtn.addEventListener("click", selectPan);
+    clearBtn.addEventListener("click", clearClickHandler);
 
     runBtn.addEventListener("click", runClickHandler);
     resetBtn.addEventListener("click", resetClickHandler);
-
-    const setup = document.getElementById("setup");
 
     setup.classList.add("zoom-fade-out");
     Utils.sleep(500 - 50).then(() => {
@@ -461,7 +448,6 @@ class GameLoop {
             palette.dot,
             2 * surface.scale
           );
-          updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
         break;
@@ -478,7 +464,6 @@ class GameLoop {
             palette.dot,
             2 * surface.scale
           );
-          updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
         break;
@@ -596,9 +581,7 @@ class GameLoop {
     uiEditState();
     isGamePaused = true;
     let i = grid.next.length;
-    while (i--) {
-      grid.next[i] = grid.root[i];
-    }
+    while (i--) grid.next[i] = grid.root[i];
   }
 
   // # Region: UI States
@@ -648,11 +631,8 @@ class GameLoop {
   }
 
   function removeActiveFromTools() {
-    const tools = document.querySelectorAll("#tools > .btn");
     let i = tools.length;
-    while (i--) {
-      tools[i].classList.remove("active");
-    }
+    while (i--) tools[i].classList.remove("active");
   }
 
   function removeListnersFromTools() {

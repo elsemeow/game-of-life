@@ -8,7 +8,6 @@ export default class Grid {
     this.#unscaled = this.unit;
     this.root = new Uint8Array(this.cols * this.rows);
     this.next = new Uint8Array(this.cols * this.rows);
-    this.state = 0;
   }
 
   get w() {
@@ -80,9 +79,7 @@ export default class Grid {
     if (y === this.rows - 1) dy[4] = dy[5] = dy[6] = 0;
 
     let l = dx.length;
-    while (l--) {
-      result += this.elByPos(arr, dx[l], dy[l]);
-    }
+    while (l--) result += this.elByPos(arr, dx[l], dy[l]);
 
     return result;
   }

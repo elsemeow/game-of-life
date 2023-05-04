@@ -3,7 +3,6 @@ export default class GameLoop {
   #interval;
   #then;
   #delta;
-  #requestId;
   #loopRunner;
 
   /** @param {number} fps - Frames per second. */
@@ -34,17 +33,11 @@ export default class GameLoop {
         throttledRender();
       }
 
-      this.#requestId = window.requestAnimationFrame(this.#loopRunner);
+      window.requestAnimationFrame(this.#loopRunner);
     };
   }
 
   run() {
     this.#loopRunner();
-  }
-
-  cancel() {
-    window.cancelAnimationFrame(this.#requestId);
-    this.#then = window.performance.now();
-    this.#delta = 0;
   }
 }

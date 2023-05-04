@@ -9,24 +9,6 @@
   <body>
     <canvas id="surface"></canvas>
 
-    <div id="tools" class="tools">
-      <button type="button" id="pencil" class="btn btn_sm">Pencil</button>
-      <button type="button" id="eraser" class="btn btn_sm">Eraser</button>
-      <button type="button" id="pan" class="btn btn_sm">Pan</button>
-      <button type="button" id="clear" class="btn btn_sm ml-1">Clear</button>
-    </div>
-
-    <div class="controls">
-      <button type="button" id="reset" class="btn">Reset</button>
-      <button type="button" id="run" class="btn">Run</button>
-    </div>
-
-    <div class="status">
-      <div>Pos: <span id="position" class="highlight"></span></div>
-      <div>Scale: <span id="scale" class="highlight"></span>%</div>
-      <div>Speed: <span id="speed" class="highlight"></span> FPS</div>
-    </div>
-
     <div class="help">
       <div>
         <span class="highlight">Camera</span> control: select
@@ -43,6 +25,24 @@
         <span class="highlight">[&larr;]</span> - slow down,
         <span class="highlight">[&rarr;]</span> - speed up
       </div>
+    </div>
+
+    <div class="status">
+      <div>Pos: <span id="position" class="highlight"></span></div>
+      <div>Scale: <span id="scale" class="highlight"></span>%</div>
+      <div>Speed: <span id="speed" class="highlight"></span> FPS</div>
+    </div>
+
+    <div id="tools" class="tools">
+      <button type="button" id="pencil" class="btn btn_sm">Pencil</button>
+      <button type="button" id="eraser" class="btn btn_sm">Eraser</button>
+      <button type="button" id="pan" class="btn btn_sm">Pan</button>
+      <button type="button" id="clear" class="btn btn_sm ml-1">Clear</button>
+    </div>
+
+    <div class="controls">
+      <button type="button" id="reset" class="btn">Reset</button>
+      <button type="button" id="run" class="btn">Run</button>
     </div>
 
     <div id="setup" class="setup">

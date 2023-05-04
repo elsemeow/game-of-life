@@ -73,7 +73,6 @@ export default class Surface {
 
     patternCtx.fillStyle = bgColor;
     patternCtx.fillRect(0, 0, unit, unit);
-
     patternCtx.fillStyle = dotColor;
     patternCtx.arc(unitMid, unitMid, r, 0, 2 * Math.PI);
     patternCtx.fill();

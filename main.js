@@ -34,6 +34,7 @@ import GameLoop from "./modules/GameLoop.js";
   const rowsRange = document.getElementById("rows-range");
   const colsDisplay = document.getElementById("cols-display");
   const rowsDisplay = document.getElementById("rows-display");
+  const setup = document.getElementById("setup");
   const createGrid = document.getElementById("create-grid");
 
   const positionDisplay = document.getElementById("position");
@@ -44,6 +45,7 @@ import GameLoop from "./modules/GameLoop.js";
   const eraserBtn = document.getElementById("eraser");
   const panBtn = document.getElementById("pan");
   const clearBtn = document.getElementById("clear");
+  const tools = document.querySelectorAll("#tools > .btn");
 
   const resetBtn = document.getElementById("reset");
   const runBtn = document.getElementById("run");
@@ -87,14 +89,13 @@ import GameLoop from "./modules/GameLoop.js";
         let i = grid.root.length;
         const unit = grid.unit;
         while (i--) {
-          if (grid.next[i]) {
+          if (grid.next[i])
             surface.ctx.fillRect(
               grid.xByIndex(i) * unit,
               grid.yByIndex(i) * unit,
               unit,
               unit
             );
-          }
         }
 
         surface.resetTransform();
@@ -130,7 +131,6 @@ import GameLoop from "./modules/GameLoop.js";
 
     initGame();
     uiSetupState();
-
     gameLoop.run();
 
     updatePositionDisplay();
@@ -140,17 +140,15 @@ import GameLoop from "./modules/GameLoop.js";
     window.addEventListener("resize", updateOnResize);
     document.addEventListener("keyup", keyUpHandler, false);
 
-    clearBtn.addEventListener("click", clearClickHandler);
     surface.el.addEventListener("mousedown", pencilMouseDownHandler);
 
     pencilBtn.addEventListener("click", selectPencil);
     eraserBtn.addEventListener("click", selectEraser);
     panBtn.addEventListener("click", selectPan);
+    clearBtn.addEventListener("click", clearClickHandler);
 
     runBtn.addEventListener("click", runClickHandler);
     resetBtn.addEventListener("click", resetClickHandler);
-
-    const setup = document.getElementById("setup");
 
     setup.classList.add("zoom-fade-out");
     Utils.sleep(500 - 50).then(() => {
@@ -177,7 +175,6 @@ import GameLoop from "./modules/GameLoop.js";
             palette.dot,
             2 * surface.scale
           );
-          updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
         break;
@@ -194,7 +191,6 @@ import GameLoop from "./modules/GameLoop.js";
             palette.dot,
             2 * surface.scale
           );
-          updatePositionDisplay();
           scaleDisplay.textContent = surface.scale * 100;
         }
         break;
@@ -312,9 +308,7 @@ import GameLoop from "./modules/GameLoop.js";
     uiEditState();
     isGamePaused = true;
     let i = grid.next.length;
-    while (i--) {
-      grid.next[i] = grid.root[i];
-    }
+    while (i--) grid.next[i] = grid.root[i];
   }
 
   // # Region: UI States
@@ -364,11 +358,8 @@ import GameLoop from "./modules/GameLoop.js";
   }
 
   function removeActiveFromTools() {
-    const tools = document.querySelectorAll("#tools > .btn");
     let i = tools.length;
-    while (i--) {
-      tools[i].classList.remove("active");
-    }
+    while (i--) tools[i].classList.remove("active");
   }
 
   function removeListnersFromTools() {
